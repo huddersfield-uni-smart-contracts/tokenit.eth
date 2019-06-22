@@ -244,7 +244,7 @@
       "title": "Formulaire du magicien",
       "step": "Step",
       "fill": "Remplissez vos données personnelles",
-      "address": "Quelle est votre adresse",
+      "address": "Quelle est votre addresse",
       "set": "Définir les préférences",
       "back": "retour",
       "next": "Suivant"
@@ -318,7 +318,7 @@
     "title": "Compte",
     "email_confirmation": {
       "title": "Confirmation par courrier électronique",
-      "verified": "Votre adresse e-mail a été vérifiée avec succès",
+      "verified": "Votre addresse e-mail a été vérifiée avec succès",
       "thank_you": "Merci d'avoir choisi EasyDev",
       "go_to_dashboard": "Aller au tableau de bord",
       "got_to_profile": "aller au profil"

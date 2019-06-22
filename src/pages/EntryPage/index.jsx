@@ -25,13 +25,13 @@ function genAddress(){
 const defaultProps = {
     validators : [],
     companies : [],
-    clients : [],
+    investors : [],
     validator_fee : 0,
     fee_percentage : 0.01,
     state : 'Waiting for approval',
     total_paid : 0,
-    auction_address : genAddress(),
-    myAuctions : [],
+    crowdsale_address : genAddress(),
+    myCrowdsales : [],
     name        : 'none',
     address     : '0x',
     type        : 'none',
@@ -80,12 +80,12 @@ class EntryPage extends React.Component{
         this.setState({...this.state, 
             validators : APISingleton.getAllByType('validator'),
             companies   : APISingleton.getAllByType('company'),
-            clients     : APISingleton.getAllByType('client'),
-            myAuctions : profile.getAuctions(),
+            investors     : APISingleton.getAllByType('investor'),
+            myCrowdsales : profile.getCrowdsales(),
             name        : profile.getName(),
             address     : profile.getAddress(),
             type        : profile.getType(),
-            amount      : profile.getTotalAmountFromAuctions()
+            amount      : profile.getTotalAmountFromCrowdsales()
         })
     }
 
@@ -99,18 +99,6 @@ class EntryPage extends React.Component{
                                 <h3>Welcome {StringWorkerSingleton.titleCase(this.state.name)} </h3>
                                 <p>You are a {StringWorkerSingleton.titleCase(this.state.type)}</p>
                                 <img src={logo} style={{width : 200, marginTop : 30}} />
-                            </CardBody>
-                        </Card>
-                    </Col>
-                    <Col lg={4}>
-                        <Card>
-                            <CardBody style={{padding : 50}}>
-                                <hr></hr>
-                                <br></br>
-                                <h4>Amount Staked on your Auctions</h4>
-                                <h4 style={{marginTop : 20}}>
-                                 ${StringWorkerSingleton.toNumber(this.state.amount)}</h4>
-                                 <MoneyIcon size={40}/>
                             </CardBody>
                         </Card>
                     </Col>

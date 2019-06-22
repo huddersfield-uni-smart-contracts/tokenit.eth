@@ -19,13 +19,13 @@ class SidebarContent extends Component {
     constructor(props){
         super(props)
         this.state = {
-            auctions : true,
-            createAuction : true,
-            editAuction : true,
+            crowdsales : true,
+            createCrowdsale : true,
+            editCrowdsale : true,
             home : true,
-            bids : true,
-            allAuctions : true,
-            createBid : true
+            investments : true,
+            allCrowdsales : true,
+            createInvestment : true
         }
     }
 
@@ -54,12 +54,12 @@ class SidebarContent extends Component {
             <div className="sidebar__content">
                 <ul className="sidebar__block">
                     {this.render_tab({disabled : !this.state.home, icon : faHome, title : 'Home Page', route : `/${type}`})}
-                    {this.render_tab({disabled : !this.state.createAuction, icon : faFileInvoice, title : 'Create Auction', route :`/${type}/createAuction`})}
-                    {this.render_tab({disabled : !this.state.createBid, icon : faCertificate, title : 'Create Bid', route :`/${type}/createBid`})}
-                    {this.render_tab({disabled : !this.state.editAuction, icon : faFileExport, title : 'Edit Auction', route : `/${type}/editAuction`})}
-                    {this.render_tab({disabled : !this.state.auctions, icon : faFileContract, title : 'My Auctions', route : `/${type}/auctions`})}
-                    {this.render_tab({disabled : !this.state.allAuctions, icon : faFileContract, title : 'All Auctions', route : `/${type}/allAuctions`})}
-                    {this.render_tab({disabled : !this.state.bids, icon : faIndustry, title : 'My Bids', route : `/${type}/bids`})}
+                    {this.render_tab({disabled : !this.state.createCrowdsale, icon : faFileInvoice, title : 'Create Crowdsale', route :`/${type}/createCrowdsale`})}
+                    {this.render_tab({disabled : !this.state.createInvestment, icon : faCertificate, title : 'Create Investment', route :`/${type}/createInvestment`})}
+                    {this.render_tab({disabled : !this.state.editCrowdsale, icon : faFileExport, title : 'Edit Crowdsale', route : `/${type}/editCrowdsale`})}
+                    {this.render_tab({disabled : !this.state.crowdsales, icon : faFileContract, title : 'My Crowdsales', route : `/${type}/crowdsales`})}
+                    {this.render_tab({disabled : !this.state.allCrowdsales, icon : faFileContract, title : 'All Crowdsales', route : `/${type}/allCrowdsales`})}
+                    {this.render_tab({disabled : !this.state.investments, icon : faIndustry, title : 'My Investments', route : `/${type}/investments`})}
                 </ul>        
             </div>
         );

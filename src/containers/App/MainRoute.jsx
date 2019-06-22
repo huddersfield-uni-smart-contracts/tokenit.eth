@@ -6,15 +6,15 @@ import { compose } from 'lodash/fp'
 import Layout from '../Layout';
 import { Route, Switch } from 'react-router-dom';
 
-import Auctions from '../../pages/Auctions';
-import CreateAuction from '../../pages/CreateAuction';
+import Crowdsales from '../../pages/Crowdsales';
+import CreateCrowdsale from '../../pages/CreateCrowdsale';
 import Account from '../../controllers/Account';
 import _ from 'lodash'
-import EditAuction from '../../pages/EditAuction';
+import EditCrowdsale from '../../pages/EditCrowdsale';
 import EntryPage from '../../pages/EntryPage';
-import Bids from '../../pages/Bids';
-import AllAuctions from '../../pages/AllAuctions';
-import CreateBid from '../../pages/CreateBid';
+import Investments from '../../pages/Investments';
+import AllCrowdsales from '../../pages/AllCrowdsales';
+import CreateInvestment from '../../pages/CreateInvestment';
 
 class MainRoute extends React.Component {
 	constructor() {
@@ -67,8 +67,8 @@ class MainRoute extends React.Component {
                 <Layout />
                 <div className="container__wrap">
                     <Route exact path={'/validator'} component={EntryPage}/>
-                    <Route path={'/validator/auctions'} component={Auctions}/>	
-                    <Route path={'/validator/editAuction'} component={EditAuction}/>	
+                    <Route path={'/validator/crowdsales'} component={Crowdsales}/>	
+                    <Route path={'/validator/editCrowdsale'} component={EditCrowdsale}/>	
                 </div>
             </div>
         )
@@ -80,24 +80,25 @@ class MainRoute extends React.Component {
                 <Layout />
                 <div className="container__wrap">
                     <Route exact path={'/company'} component={EntryPage}/>
-                    <Route path={'/company/allAuctions'} component={AllAuctions}/>	
-                    <Route path={'/company/bids'} component={Bids}/>	
-                    <Route path={'/company/createBid'} component={CreateBid}/>	
+                    <Route path={'/company/createCrowdsale'} component={CreateCrowdsale}/>	
+                    <Route path={'/company/editCrowdsale'} component={EditCrowdsale}/>	
+                    <Route path={'/company/crowdsales'} component={Crowdsales}/>	
+                    <Route path={'/company/investments'} component={Investments}/>	
                 </div>
             </div>
         )
     }
 
-    clientRoutes = () => {
+    investorRoutes = () => {
         return(
             <div>
                 <Layout />
                 <div className="container__wrap">
-                    <Route exact path={'/client'} component={EntryPage}/>
-                    <Route path={'/client/createAuction'} component={CreateAuction}/>	
-                    <Route path={'/client/editAuction'} component={EditAuction}/>	
-                    <Route path={'/client/auctions'} component={Auctions}/>	
-                    <Route path={'/client/bids'} component={Bids}/>	
+                    <Route exact path={'/investor'} component={EntryPage}/>
+                    <Route path={'/investor/allCrowdsales'} component={AllCrowdsales}/>	
+                    <Route path={'/investor/investments'} component={Investments}/>	
+                    <Route path={'/investor/createInvestment'} component={CreateInvestment}/>	
+
                 </div>
             </div>
         )
@@ -117,7 +118,7 @@ class MainRoute extends React.Component {
                         {
                             type == 'validator' ? this.validatorRoutes(this.props) : 
                             type == 'company'   ? this.companyRoutes(this.props) : 
-                            type == 'client'    ? this.clientRoutes(this.props) : 
+                            type == 'investor'    ? this.investorRoutes(this.props) : 
                             null
                         }
                     </div>

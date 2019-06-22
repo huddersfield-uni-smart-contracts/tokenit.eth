@@ -5,7 +5,7 @@ var randomHex = require('randomhex');
 class Crypto{
 
     constructor(){
-        // TO DO : Finalize Client See e Server Seed Setup
+        // TO DO : Finalize Investor See e Server Seed Setup
 
     }
 

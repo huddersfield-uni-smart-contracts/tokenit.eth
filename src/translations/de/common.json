@@ -244,7 +244,7 @@
 			"title": "Form des Magiers",
 			"step": "Schritt",
 			"fill": "Geben Sie Ihre persönlichen Daten ein",
-			"address": "Was ist deine Adresse",
+			"address": "Was ist deine Addresse",
 			"set": "Einstellungen festlegen",
 			"back": "zurück",
 			"next": "Nächstes"
@@ -318,7 +318,7 @@
 		"title": "Konto",
 		"email_confirmation": {
 			"title": "Bestätigung per E-Mail",
-			"verified": "Ihre E-Mail-Adresse wurde erfolgreich verifiziert",
+			"verified": "Ihre E-Mail-Addresse wurde erfolgreich verifiziert",
 			"thank_you": "Danke, dass Sie sich für EasyDev entschieden haben",
 			"go_to_dashboard": "Gehe zum Dashboard",
 			"got_to_profile": "gehe zum Profil"

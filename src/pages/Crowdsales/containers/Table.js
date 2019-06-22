@@ -20,7 +20,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 import { FilterListIcon } from 'mdi-react';
 import Numbers from '../../../services/numbers';
-import auctionStatus from './codes';
+import crowdsaleStatus from './codes';
 import StringWorkerSingleton from '../../../services/string';
 import { connect } from "react-redux";
 import { compose } from 'lodash/fp'
@@ -68,15 +68,15 @@ const fromDatabasetoTable = (data) => {
 	return data.map( (item, index) => {
         return {
             id :  index,
-            name : item.pba_name,
-            auction_adress : item.auction_address,
+            name : item.crowdsale_name,
+            crowdsale_address : item.crowdsale_address,
 			company : item.company ? item.company.name : 'N/A',
-            client: item.client.name,
-            bids : item.bids,
-            validator  : item.validator.name,
-            workpackage_name : item.workpackage_name,
-            amount :  Numbers.formatNumber(item.payment_amount),
-            paid :  Numbers.formatNumber(item.total_paid),
+            investor: item.investor.name,
+            investments : item.investments,
+            token_price : item.token_price,
+            token_amount : item.token_amount,
+            raised_percentage :  Numbers.toFloat(item.already_raised/item.total_raise)*100,
+            raised_amount :  Numbers.toFloat(item.already_raised),
             state: item.state || 'none'
 		}
 	})
@@ -94,23 +94,29 @@ const rows = [
         numeric: false
     },
     {
-        id: 'bids',
-        label: 'Bids',
+        id: 'investments',
+        label: 'Investments',
         numeric: true
     },
     {
-        id: 'auction_adress',
-        label: 'Auction Adress',
+        id: 'crowdsale_address',
+        label: 'Crowdsale Address',
         numeric: false
     },
     {
-        id: 'paid',
-        label: 'Already Paid',
+        id: 'token_price',
+        label: '($) Token Price',
         numeric: true
     },
     {
-        id: 'amount',
-        label: 'Amount',
+        id: 'raised_percentage',
+        label: '(%) Already Raised',
+        numeric: true
+    },
+   
+    {
+        id: 'raised_amount',
+        label: '($) Already Raised',
         numeric: true
     },
     {
@@ -119,23 +125,8 @@ const rows = [
         numeric: false
     },
     {
-        id: 'workpackage_name',
-        label: 'Work Package',
-        numeric: false
-    },
-    {
         id: 'company',
         label: 'Company Name',
-        numeric: false
-    },
-    {
-        id: 'client',
-        label: 'Client Name',
-        numeric: false
-    },
-    {
-        id: 'validator',
-        label: 'Validator Name',
         numeric: false
     }
 ];
@@ -232,7 +223,7 @@ let EnhancedTableToolbar = props => {
             </Typography>
             ) : (
             <Typography variant="h6" id="tableTitle">
-                Auctions
+                Crowdsales
             </Typography>
             )}
         </div>
@@ -280,7 +271,7 @@ const defaultProps = {
 }
 
 
-class AuctionsTable extends React.Component {
+class CrowdsalesTable extends React.Component {
     
     constructor(props){
         super(props)
@@ -301,8 +292,7 @@ class AuctionsTable extends React.Component {
     }
 
     projectData = (props) => {
-        let data = props.auctions;
-
+        let data = props.crowdsales;
         this.setState({...this.state, 
             data : fromDatabasetoTable(data),
         })
@@ -328,17 +318,17 @@ class AuctionsTable extends React.Component {
         this.setState({ selected: [] });
     };
 
-    goToEdit =  async (auction) => {
+    goToEdit =  async (crowdsale) => {
         const { profile } = this.props;
-        profile.setEditingAuction(auction);
+        profile.setEditingCrowdsale(crowdsale);
         await profile.update();
-        this.props.history.push(`/${profile.getType()}/editAuction`);
+        this.props.history.push(`/${profile.getType()}/editCrowdsale`);
     }
 
     handleClick = (event, object) => {
         let id = object.id;
-        let auction = APISingleton.getAuctionByAuctionAddress(object.auction_adress);
-        this.goToEdit(auction);
+        let crowdsale = APISingleton.getCrowdsaleByCrowdsaleAddress(object.crowdsale_address);
+        this.goToEdit(crowdsale);
         const { selected } = this.state;
         const selectedIndex = selected.indexOf(id);
         let newSelected = [];
@@ -405,18 +395,15 @@ class AuctionsTable extends React.Component {
                                 >
                                     <TableCell align="left">{n.id}</TableCell>
                                     <TableCell align="left">{n.name}</TableCell>
-                                    <TableCell align="center">{n.bids.length}</TableCell>
-                                    <TableCell align="left">{StringWorkerSingleton.toAddressConcat(n.auction_adress)}</TableCell>
-                                  
-                                    <TableCell align="left">{n.paid} €</TableCell>
-                                    <TableCell align="left">{n.amount} €</TableCell>
+                                    <TableCell align="center">{n.investments.length}</TableCell>
+                                    <TableCell align="left">{StringWorkerSingleton.toAddressConcat(n.crowdsale_address)}</TableCell>
+                                    <TableCell align="left">${n.token_price} </TableCell>
+                                    <TableCell align="left">{n.raised_percentage}%</TableCell>
+                                    <TableCell align="left">${n.raised_amount} </TableCell>
                                     <TableCell style={{width : 50}} align="center">
-                                        <p className={auctionStatus[n.state.toLowerCase()]}>
+                                        <p className={crowdsaleStatus[n.state.toLowerCase()]}>
                                         {titleCase(n.state)}</p></TableCell>
-                                    <TableCell align="left">{n.workpackage_name}</TableCell>
                                     <TableCell align="left">{n.company}</TableCell>
-                                    <TableCell align="left">{n.client}</TableCell>
-                                    <TableCell align="left">{n.validator}</TableCell>
                                     </TableRow>
                             );
                         })}
@@ -448,7 +435,7 @@ class AuctionsTable extends React.Component {
     }
 }
 
-AuctionsTable.propTypes = {
+CrowdsalesTable.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
@@ -462,5 +449,5 @@ function mapStateToProps(state){
 export default compose(
     withStyles(styles),
     connect(mapStateToProps)
-)(AuctionsTable);
+)(CrowdsalesTable);
 

@@ -11,7 +11,7 @@ const TimelineHistory = () => (
         sometimes additions recommend fat our.
       </p>
     </TimeLineItem>
-    <TimeLineItem type="video" title="Video conference with client" date="5 hours ago">
+    <TimeLineItem type="video" title="Video conference with investor" date="5 hours ago">
       <p>Dependent certainty off discovery him his tolerably offending. Ham for attention remainder
             sometimes additions recommend fat our.
       </p>

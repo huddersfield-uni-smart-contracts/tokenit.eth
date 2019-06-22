@@ -5,17 +5,17 @@ import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { compose } from 'lodash/fp'
 import ProfileCard from './containers/ProfileCard';
-import { getValidator, getClient, getcompany } from '../../const/profiles';
+import { getValidator, getInvestor, getcompany } from '../../const/profiles';
 import Account from '../../controllers/Account';
 const company = `${process.env.PUBLIC_URL}/img/company.png`;
-const client = `${process.env.PUBLIC_URL}/img/client.png`;
+const investor = `${process.env.PUBLIC_URL}/img/investor.png`;
 const validator = `${process.env.PUBLIC_URL}/img/validator.png`;
 const logo = `${process.env.PUBLIC_URL}/img/logo.png`;
 
 /* User Map - Mocks */
 const userMap = {
     'validator'     : getValidator(),
-    'client'        : getClient(),
+    'investor'        : getInvestor(),
     'company'       : getcompany()
 }
 
@@ -45,13 +45,13 @@ class ProfilePickerPage extends React.Component{
                 </Row>
                 <Row>
                     <p className='text-initial_page'>
-                        Welcome to the autonomous PBA smart-auction! Here you’ll be able to create payments that respect certain conditions, in order to make payments between auctionor – auctioned faster, simpler and more transparent.
+                        Welcome to the autonomous PBA smart-crowdsale! Here you’ll be able to create payments that respect certain conditions, in order to make payments between crowdsaleor – crowdsaleed faster, simpler and more transparent.
                     <p>  
                         To start using the autonomous PBA, please make sure all agents have a valid Ethereum address. </p>
                     <p>
                         Start by defining addresses for Validators and Companies, by clicking on each icon respectively.
-                        Afterwards, you can click on the Client agent to define the initial conditions for the payments smart-
-                        auction.
+                        Afterwards, you can click on the Investor agent to define the initial conditions for the payments smart-
+                        crowdsale.
                     </p>
                     <p>
                         Remember: amendments can be made to some variables such as date, time or names, but not to
@@ -60,14 +60,11 @@ class ProfilePickerPage extends React.Component{
                     </p>
                 </Row>
                 <Row style={{marginTop : 50}} >
-                    <Col lg={4}>
-                        <ProfileCard enter={this.enter} type={'client'} image={client} name={'Client'} text={'The agent responsible for defining the auction rules and for making the payments'} />
+                    <Col lg={6}>
+                        <ProfileCard enter={this.enter} type={'investor'} image={investor} name={'Investor'} text={'The agent responsible for defining the crowdsale rules and for making the payments'} />
                     </Col>
-                    <Col lg={4}>
-                        <ProfileCard enter={this.enter} type={'validator'} image={validator} name={'Validator'} text={'The agent responsible to handle disputes between the Company and the Client'} />
-                    </Col>
-                    <Col lg={4}>
-                        <ProfileCard enter={this.enter} type={'company'} image={company} name={'Company'} text={'The agent responsible to execute the work defined in the smart-auction and receive the payments'} />
+                    <Col lg={6}>
+                        <ProfileCard enter={this.enter} type={'company'} image={company} name={'Company'} text={'The agent responsible to execute the work defined in the smart-crowdsale and receive the payments'} />
                     </Col>
                 </Row>              
             </Container>

@@ -1,19 +1,19 @@
-class auction{
+class crowdsale{
 
     constructor(params){
         this.web3 = params.web3;
-        this.abi = params.auction.abi;
+        this.abi = params.crowdsale.abi;
         this.address = params.address;
-        this.json = params.auction;
-        this.auction = new params.web3.eth.Auction(params.auction.abi, params.address)
+        this.json = params.crowdsale;
+        this.crowdsale = new params.web3.eth.Crowdsale(params.crowdsale.abi, params.address)
     }
 
     async deploy(account, abi, byteCode, args=[]){
-        this.auction = new this.web3.eth.Auction(abi);
+        this.crowdsale = new this.web3.eth.Crowdsale(abi);
 
         let balance = await this.web3.eth.getBalance(account.address);
         console.log("Balance is " + this.web3.utils.fromWei(balance, 'ether') + " ETH");
-        let data = this.auction.deploy({
+        let data = this.crowdsale.deploy({
             data : byteCode,
             arguments: args
         }).encodeABI();
@@ -26,17 +26,17 @@ class auction{
         
         let result = await account.signTransaction(tx);
         let transaction = await this.web3.eth.sendSignedTransaction(result.rawTransaction);
-        console.log("Auction Signed");
+        console.log("Crowdsale Signed");
         //fs.writeFile('Deployed.json', JSON.stringify(transaction), 'utf8', () => {});
-        this.address = transaction.auctionAddress;
+        this.address = transaction.crowdsaleAddress;
         return transaction;
     }
 
-    async use(auction_json, address){
-        this.json = auction_json;      
-        this.abi = auction_json.abi;
+    async use(crowdsale_json, address){
+        this.json = crowdsale_json;      
+        this.abi = crowdsale_json.abi;
         this.address = address ? address : this.address;
-        this.auction = new this.web3.eth.Auction(auction_json.abi, this.address)
+        this.crowdsale = new this.web3.eth.Crowdsale(crowdsale_json.abi, this.address)
     } 
 
     async send(account, byteCode, value='0x0'){
@@ -54,8 +54,8 @@ class auction{
         return transaction;
     }
     
-    getAuction(){
-        return this.auction;
+    getCrowdsale(){
+        return this.crowdsale;
     }
 
     getABI(){
@@ -72,4 +72,4 @@ class auction{
 }
 
 
-export default auction;
+export default crowdsale;

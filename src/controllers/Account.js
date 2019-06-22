@@ -59,7 +59,7 @@ class Account{
 
     update = async () => {
         /* if(this.logged){
-            this.auctions = await this.getAuctions();
+            this.crowdsales = await this.getCrowdsales();
         } */
         /* Add Everything to the Redux State */  
         return await store.dispatch(setProfileInfo(this));
@@ -100,35 +100,35 @@ class Account{
         ErrorManagerSingleton.checkErrors(type, object)
     }
 
-    getAuctions = () => {
-        return APISingleton.getAuctionsByAddress(this.params.address);
+    getCrowdsales = () => {
+        return APISingleton.getCrowdsalesByAddress(this.params.address);
     }
     
-    getAllAuctions = () => {
-        return APISingleton.getAllAuctions();
+    getAllCrowdsales = () => {
+        return APISingleton.getAllCrowdsales();
     }
 
-    getTotalAmountFromAuctions = () => {
-        let auctions = APISingleton.getAuctionsByAddress(this.params.address);
-        return auctions.reduce( (acc, item) => {
+    getTotalAmountFromCrowdsales = () => {
+        let crowdsales = APISingleton.getCrowdsalesByAddress(this.params.address);
+        return crowdsales.reduce( (acc, item) => {
             return parseInt(acc)+parseInt(item.payment_amount);
         }, 0)
     }
 
-    getBidsByAuction = (auction_address) => {
-        return APISingleton.getBidsByAuctionAddress(auction_address) || [];
+    getInvestmentsByCrowdsale = (crowdsale_address) => {
+        return APISingleton.getInvestmentsByCrowdsaleAddress(crowdsale_address) || [];
     }
 
-    getBids = () => {
-        return APISingleton.getBidsByAddress(this.getType(), this.getAddress()) || [];
+    getInvestments = () => {
+        return APISingleton.getInvestmentsByAddress(this.getType(), this.getAddress()) || [];
     }
 
-    getEditableAuction = () => {
-        return this.editableAuction;
+    getEditableCrowdsale = () => {
+        return this.editableCrowdsale;
     }
 
-    setEditingAuction = (auction) => {
-        this.editableAuction = auction;
+    setEditingCrowdsale = (crowdsale) => {
+        this.editableCrowdsale = crowdsale;
         this.editing = true;
     }
 
@@ -136,13 +136,12 @@ class Account{
         return this.editing;
     }
 
-    editAuction = async (auction) => {
+    editCrowdsale = async (crowdsale) => {
         try{
-            if(auction['company'])
-                await APISingleton.editAuctionByAddress(auction, auction['company'].address);
-            await APISingleton.editAuctionByAddress(auction, auction['client'].address);
-            await APISingleton.editAuctionByAddress(auction, auction['validator'].address);
-            await APISingleton.editAuctionbyAll(auction);
+            if(crowdsale['investor'])
+                await APISingleton.editCrowdsaleByAddress(crowdsale, crowdsale['investor'].address);
+            await APISingleton.editCrowdsaleByAddress(crowdsale, crowdsale['company'].address);
+            await APISingleton.editCrowdsalebyAll(crowdsale);
             await this.update();
             this.editing = false;
         }catch(err){
@@ -150,38 +149,35 @@ class Account{
         }
     }
 
-    saveAuction = async (auction) => {
-        if(auction['company'])
-            await APISingleton.addAuctionByAddress(auction, auction['company'].address);
-        await APISingleton.addAuctionByAddress(auction, auction['client'].address);
-        await APISingleton.addAuctionByAddress(auction, auction['validator'].address);
-        await APISingleton.addAuctionoToAll(auction);
+    saveCrowdsale = async (crowdsale) => {
+        await APISingleton.addCrowdsaleByAddress(crowdsale, crowdsale['company'].address);
+        await APISingleton.addCrowdsaleoToAll(crowdsale);
         await this.update();
         return true;
     }
 
-    addBidByAuctionByAddress = async (bid, auction_address) => {
-        let auction = await APISingleton.addBidByAuctionByAddress(bid, auction_address);
-        await this.editAuction(auction);
+    addInvestmentByCrowdsaleByAddress = async (investment, crowdsale_address) => {
+        let crowdsale = await APISingleton.addInvestmentByCrowdsaleByAddress(investment, crowdsale_address);
+        await this.editCrowdsale(crowdsale);
         await this.update();
         return true;
     }
 
-    closeAuction = async ({auction, bid_accepted}) => {
-        for(var i = 0; i < auction['bids'].length; i++){
-            if(bid_accepted._id == auction['bids'][i]._id){
-                auction['bids'][i] = {...auction['bids'][i], state : 'Accepted'};  
+    closeCrowdsale = async ({crowdsale, investment_accepted}) => {
+        for(var i = 0; i < crowdsale['investments'].length; i++){
+            if(investment_accepted._id == crowdsale['investments'][i]._id){
+                crowdsale['investments'][i] = {...crowdsale['investments'][i], state : 'Accepted'};  
             }else{
-                auction['bids'][i] = {...auction['bids'][i], state : 'Rejected'};
+                crowdsale['investments'][i] = {...crowdsale['investments'][i], state : 'Rejected'};
             }
         }
-        await this.editAuction(auction);
+        await this.editCrowdsale(crowdsale);
     }
 
-    editBidByAuctionByAddress = async (bid, auction_address) => {
+    editInvestmentByCrowdsaleByAddress = async (investment, crowdsale_address) => {
         try{
-            let auction = await APISingleton.editBidByAuctionByAddress(bid, auction_address);
-            this.editAuction(auction);
+            let crowdsale = await APISingleton.editInvestmentByCrowdsaleByAddress(investment, crowdsale_address);
+            this.editCrowdsale(crowdsale);
             await this.update();
             return true;
         }catch(err){

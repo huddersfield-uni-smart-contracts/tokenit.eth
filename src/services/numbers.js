@@ -50,7 +50,7 @@ class numbers{
         return accounting.formatNumber(number);
     }
 
-    toSmartAuctionDecimals(value, decimals){
+    toSmartCrowdsaleDecimals(value, decimals){
         let numberWithNoExponents = new Number(value*10**decimals).noExponents();
         return numberWithNoExponents;
     }

@@ -23,8 +23,8 @@ class Cryptography{
         return Math.floor(Math.random() * 10000000000000000) + 1;
     }
 
-    generateRandomResult(server_seed, client_seed, nonce){
-        let randomHex = SHA512(server_seed, client_seed);
+    generateRandomResult(server_seed, investor_seed, nonce){
+        let randomHex = SHA512(server_seed, investor_seed);
         return randomHex;
 
     }
@@ -46,7 +46,7 @@ class Cryptography{
     async getUserSignature({address, winBalance, nonce, category, decimals}){
 
         var data =  window.web3.utils.soliditySha3(
-            {type: 'int128', value :  Numbers.fromExponential(Numbers.toSmartAuctionDecimals(winBalance, decimals))},
+            {type: 'int128', value :  Numbers.fromExponential(Numbers.toSmartCrowdsaleDecimals(winBalance, decimals))},
             {type: 'uint128', value: nonce},
             {type: 'uint8', value: category}
         );

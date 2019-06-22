@@ -1,30 +1,30 @@
 const pageAccess = {
-    'client' : {
+    'company' : {
         home : true,
-        createAuction : true,
-        editAuction : false,
-        auctions : true,
-        bids : false,
-        allAuctions : false,
-        createBid : false
+        createCrowdsale : true,
+        editCrowdsale : false,
+        crowdsales : true,
+        investments : false,
+        allCrowdsales : false,
+        createInvestment : false
     },
     'validator' : {
         home : true,
-        createAuction : false,
-        editAuction : false,
-        auctions : true,
-        bids : false,
-        allAuctions : false,
-        createBid : false
+        createCrowdsale : false,
+        editCrowdsale : false,
+        crowdsales : true,
+        investments : false,
+        allCrowdsales : false,
+        createInvestment : false
     },
-    'company' : {
+    'investor' : {
         home : true,
-        createAuction : false,
-        editAuction : false,
-        auctions : false,
-        bids : true,
-        allAuctions : true,
-        createBid : false
+        createCrowdsale : false,
+        editCrowdsale : false,
+        crowdsales : false,
+        investments : true,
+        allCrowdsales : true,
+        createInvestment : false
     },
 }
 

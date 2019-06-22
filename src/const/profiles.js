@@ -1,5 +1,5 @@
 const validator = `${process.env.PUBLIC_URL}/img/validator.png`;
-const client = `${process.env.PUBLIC_URL}/img/client.png`;
+const investor = `${process.env.PUBLIC_URL}/img/investor.png`;
 const company = `${process.env.PUBLIC_URL}/img/company.png`;
 
 
@@ -12,11 +12,11 @@ function getValidator(){
 }
 
 
-function getClient(){
+function getInvestor(){
     return {
         name : 'Jemery',
-        type : 'client',
-        image : client
+        type : 'investor',
+        image : investor
     }
 }
 
@@ -32,6 +32,6 @@ function getcompany(){
 
 export {
     getValidator,
-    getClient,
+    getInvestor,
     getcompany
 }

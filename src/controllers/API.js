@@ -1,5 +1,6 @@
 import Cache from "../services/cache";
 import _  from 'lodash';
+import Numbers from "../services/numbers";
 
 class API{
     constructor() {        
@@ -23,122 +24,128 @@ class API{
 
     /* AUCTIONS */
 
-    getAllAuctions = () => {
-        let array =  Cache.getFromCache(`all/Auctions`);
+    getAllCrowdsales = () => {
+        let array =  Cache.getFromCache(`all/Crowdsales`);
         if(!array){return []};
         return array;
     }
 
-    getAuctionsByAddress = (address) => {
-        let array =  Cache.getFromCache(`${new String(address).toLowerCase()}/Auctions`);
+    getCrowdsalesByAddress = (address) => {
+        let array =  Cache.getFromCache(`${new String(address).toLowerCase()}/Crowdsales`);
         if(!array){return []};
         return array;
     }
 
-    getAuctionByAuctionAddress = (auction_address) => {
-        var address = auction_address;
-        let array = this.getAllAuctions();
+    getCrowdsaleByCrowdsaleAddress = (crowdsale_address) => {
+        var address = crowdsale_address;
+        let array = this.getAllCrowdsales();
         for (var i=0; i < array.length; i++) {
-            if (new String(array[i].auction_address).toLowerCase().trim() == new String(address).toLowerCase().trim() ) {
+            if (new String(array[i].crowdsale_address).toLowerCase().trim() == new String(address).toLowerCase().trim() ) {
                 return array[i];
             }
         }
         return null; 
     }
     
-    addAuctionByAddress = async (auction, address) => {
-        // Add to Type Auction
-        var array = this.getAuctionsByAddress(address);
+    addCrowdsaleByAddress = async (crowdsale, address) => {
+        // Add to Type Crowdsale
+        var array = this.getCrowdsalesByAddress(address);
         if(!array){array = []}
-        array.push(auction);
-        await Cache.setToCache(`${new String(address).toLowerCase()}/Auctions`, array);
+        array.push(crowdsale);
+        await Cache.setToCache(`${new String(address).toLowerCase()}/Crowdsales`, array);
     }
 
-    addAuctionoToAll = async (auction) => {
-        // Add to All Auctions
-        var all_array = this.getAllAuctions();
+    addCrowdsaleoToAll = async (crowdsale) => {
+        // Add to All Crowdsales
+        var all_array = this.getAllCrowdsales();
         if(!all_array){all_array = []}
-        all_array.push(auction);
-        await Cache.setToCache(`all/Auctions`, all_array);
+        all_array.push(crowdsale);
+        await Cache.setToCache(`all/Crowdsales`, all_array);
     }
 
-    editAuctionByAddress = async (auctionObject, savableAddress) => {
-        // Add to Type Auction
-        var auction = auctionObject;
-        var array = this.getAuctionsByAddress(savableAddress);
+    editCrowdsaleByAddress = async (crowdsaleObject, savableAddress) => {
+        // Add to Type Crowdsale
+        var crowdsale = crowdsaleObject;
+        var array = this.getCrowdsalesByAddress(savableAddress);
         if(!array){array = []}
         for (var i=0; i < array.length; i++) {
-            if (array[i].auction_address == auction.auction_address) {
-                array[i] = auction;
+            if (array[i].crowdsale_address == crowdsale.crowdsale_address) {
+                array[i] = crowdsale;
             }
         }
-        await Cache.setToCache(`${new String(savableAddress).toLowerCase()}/Auctions`, array);
+        await Cache.setToCache(`${new String(savableAddress).toLowerCase()}/Crowdsales`, array);
     }
 
-    editAuctionbyAll = async (auctionObject) => {
-        // Add to Type Auction
-        var auction = auctionObject;
-        var array = this.getAllAuctions();
+    editCrowdsalebyAll = async (crowdsaleObject) => {
+        // Add to Type Crowdsale
+        var crowdsale = crowdsaleObject;
+        var array = this.getAllCrowdsales();
         if(!array){array = []}
         for (var i=0; i < array.length; i++) {
-            if (array[i].auction_address == auction.auction_address) {
-                array[i] = auction;
+            if (array[i].crowdsale_address == crowdsale.crowdsale_address) {
+                array[i] = crowdsale;
             }
         }
-        await Cache.setToCache(`all/Auctions`, array);
+        await Cache.setToCache(`all/Crowdsales`, array);
     }
 
     /* BIDS */
 
-    addBidByAuctionByAddress = async (bid, auction_address) => {
-        // Add to Type Auction
-        var auction = this.getAuctionByAuctionAddress(auction_address);
-        if(!auction.bids){auction.bids = []}
-        auction.bids.push(bid);
-        return auction;
+    addInvestmentByCrowdsaleByAddress = async (investment, crowdsale_address) => {
+        // Add to Type Crowdsale
+        var crowdsale = this.getCrowdsaleByCrowdsaleAddress(crowdsale_address);
+        if(!crowdsale.investments){crowdsale.investments = []}
+        crowdsale.investments.push(investment);
+        crowdsale.already_raised = Numbers.toFloat(crowdsale.investments.reduce( (acc, item) => acc+parseFloat(item.token_price)*parseFloat(item.token_buy_amount), 0));
+        crowdsale.left_to_raise = Numbers.toFloat(crowdsale.total_raise - parseFloat(crowdsale.already_raised));
+        // Closed Crodwsale
+        if(crowdsale.already_raised == investment.total_raise){
+            crowdsale.state = 'Closed';
+        }
+        return crowdsale;
     }
 
-    editBidByAuctionByAddress =  async (bidObject, auction_address) => {
-        // Add to Type Auction
-        var bid = bidObject;
-        var auction = this.getAuctionByAuctionAddress(auction_address);
-        let bids = auction.bids;
-        if(!bids){bids = []}
-        for (var i=0; i < bids.length; i++) {
-            if (bids[i]._id == bid._id) {
-                auction.bids[i] = bid;
+    editInvestmentByCrowdsaleByAddress =  async (investmentObject, crowdsale_address) => {
+        // Add to Type Crowdsale
+        var investment = investmentObject;
+        var crowdsale = this.getCrowdsaleByCrowdsaleAddress(crowdsale_address);
+        let investments = crowdsale.investments;
+        if(!investments){investments = []}
+        for (var i=0; i < investments.length; i++) {
+            if (investments[i]._id == investment._id) {
+                crowdsale.investments[i] = investment;
             }
         }
-        return auction;
+        return crowdsale;
     }
 
 
-    getBidsByAuctionAddress = (auction_address) => {
-        // Add to Type Auction
-        var array = this.getAllAuctions();
+    getInvestmentsByCrowdsaleAddress = (crowdsale_address) => {
+        // Add to Type Crowdsale
+        var array = this.getAllCrowdsales();
         for (var i=0; i < array.length; i++) {
-            if (array[i].auction_address == auction_address) {
-                return array[i].bids;
+            if (array[i].crowdsale_address == crowdsale_address) {
+                return array[i].investments;
             }
         }
     }
    
 
-    getBidsByAddress = (type, address) => {
-        // Add to Type Auction
-        var array = this.getAllAuctions();
-        let bids = [];
+    getInvestmentsByAddress = (type, address) => {
+        // Add to Type Crowdsale
+        var array = this.getAllCrowdsales();
+        let investments = [];
         for (var i=0; i < array.length; i++) {
-            if(array[i].bids){
-                for( var j=0; j < array[i].bids.length; j++){
-                    let bid = array[i].bids[j];
-                    if (bid[type] && (bid[type].address == address)) {
-                        bids = bids.concat(bid)
+            if(array[i].investments){
+                for( var j=0; j < array[i].investments.length; j++){
+                    let investment = array[i].investments[j];
+                    if (investment[type] && (investment[type].address == address)) {
+                        investments = investments.concat(investment)
                     }
                 }
             }            
         }
-        return bids;
+        return investments;
     }
     
 }

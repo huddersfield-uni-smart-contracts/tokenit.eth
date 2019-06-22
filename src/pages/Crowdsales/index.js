@@ -4,9 +4,9 @@ import { translate } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { compose } from 'lodash/fp'
-import AllAuctionsTable from './containers/Table';
+import CrowdsalesTable from './containers/Table';
 
-class AllAuctions extends React.Component{
+class Crowdsales extends React.Component{
 
     constructor(props){
         super(props)
@@ -17,7 +17,7 @@ class AllAuctions extends React.Component{
         const {profile} = this.props;
         return (
             <Container className="dashboard">
-                <AllAuctionsTable {...this.props} auctions={profile.getAllAuctions()}/>
+                <CrowdsalesTable {...this.props} crowdsales={profile.getCrowdsales()}/>
             </Container>
         )
     }
@@ -29,7 +29,7 @@ function mapStateToProps(state){
     };
 }
 
-AllAuctions.propTypes = {
+Crowdsales.propTypes = {
     t: PropTypes.func.isRequired
 };
 
@@ -37,5 +37,5 @@ AllAuctions.propTypes = {
 export default compose(
     translate('common'),
     connect(mapStateToProps)
-)(AllAuctions);
+)(Crowdsales);
 
