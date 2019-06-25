@@ -123,9 +123,7 @@ class EditCrowdsale extends React.Component{
 
     edit = async () => {
         const { profile } = this.props;
-        console.log(this.state.crowdsale_address);
         let crowdsale = APISingleton.getCrowdsaleByCrowdsaleAddress(this.state.crowdsale_address);
-        console.log(crowdsale)
         if(this.state.type == 'investor'){
             await profile.closeCrowdsale({
                 crowdsale : { ...crowdsale, ...this.state},

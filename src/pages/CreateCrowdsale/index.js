@@ -80,8 +80,7 @@ function NumberFormatCustom$(props) {
 }
 
 
-let params = 
-['crowdsale_name', 'token_price', 'start_date', 'end_date', 'state', 'token_amount']
+let params = ['crowdsale_name', 'token_price', 'start_date', 'end_date', 'state', 'token_amount']
 
 function checkParams(state){
     return params.reduce( (acc, item) =>(acc && state[item]), true)

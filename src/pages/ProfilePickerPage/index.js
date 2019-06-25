@@ -45,25 +45,26 @@ class ProfilePickerPage extends React.Component{
                 </Row>
                 <Row>
                     <p className='text-initial_page'>
-                        Welcome to the autonomous PBA smart-crowdsale! Here you’ll be able to create payments that respect certain conditions, in order to make payments between crowdsaleor – crowdsaleed faster, simpler and more transparent.
-                    <p>  
-                        To start using the autonomous PBA, please make sure all agents have a valid Ethereum address. </p>
-                    <p>
-                        Start by defining addresses for Validators and Companies, by clicking on each icon respectively.
-                        Afterwards, you can click on the Investor agent to define the initial conditions for the payments smart-
-                        crowdsale.
-                    </p>
-                    <p>
-                        Remember: amendments can be made to some variables such as date, time or names, but not to
-                        amounts.
-                    </p>
+                            Welcome to the Crowdsale smart-contract! Here you’ll be able to create decentralised fund-raising events, where tokens are issued and can represent any virtual asset, like shares, bonds or any sort of entitlements. With the Crowdsale smart-contract, raising funds for public projects can be more efficient, transparent and auditable by any of the involved parties.
+                        <p>  
+                            Start by choosing a login for the Client, Validator and Company, by clicking on each icon respectively. Afterwards, you can click on the Client agent to define the initial conditions for the payments smart- auction.
+                        </p>
+                        <p>
+                            To use the Crowdsale smart-contract, please make sure all agents have a valid Ethereum address.
+                        </p>
+                        <p>
+                            Remember: amendments can be made to some variables such as date, time or names, but not to amounts.
+                        </p>
                     </p>
                 </Row>
                 <Row style={{marginTop : 50}} >
-                    <Col lg={6}>
+                    <Col lg={4}>
                         <ProfileCard enter={this.enter} type={'investor'} image={investor} name={'Investor'} text={'The agent responsible for defining the crowdsale rules and for making the payments'} />
                     </Col>
-                    <Col lg={6}>
+                    <Col lg={4}>
+                        <ProfileCard enter={this.enter} type={'validator'} image={validator} name={'Validator'} text={'The agent responsible to handle disputes between the Company and the Client'} />
+                    </Col>
+                    <Col lg={4}>
                         <ProfileCard enter={this.enter} type={'company'} image={company} name={'Company'} text={'The agent responsible to execute the work defined in the smart-crowdsale and receive the payments'} />
                     </Col>
                 </Row>              

@@ -107,18 +107,21 @@ const rows = [
     {
         id: 'token_price',
         label: '($) Token Price',
-        numeric: true
+        numeric: true,
+        align : 'left'
     },
     {
         id: 'raised_percentage',
         label: '(%) Already Raised',
-        numeric: true
+        numeric: true,
+        align : 'left'
     },
    
     {
         id: 'raised_amount',
         label: '($) Already Raised',
-        numeric: true
+        numeric: true,
+        align : 'left'
     },
     {
         id: 'state',
@@ -148,7 +151,7 @@ class EnhancedTableHead extends React.Component {
                     row => (
                     <TableCell
                         key={row.id}
-                        align={row.numeric ? 'right' : 'left'}
+                        align={!row.align ? row.numeric ? 'right' : 'left' : row.align}
                         padding={row.disablePadding ? 'none' : 'default'}
                         sortDirection={orderBy === row.id ? order : false}
                     >
@@ -322,17 +325,16 @@ class AllCrowdsalesTable extends React.Component {
     };
 
     goToEdit =  async (crowdsale) => {
-        console.log(crowdsale)
         const { profile } = this.props;
-        profile.setEditingCrowdsale(crowdsale);
-        await profile.update();
-        this.props.history.push(`/${profile.getType()}/createInvestment`);
+        if(profile.getType() == 'investor'){
+            profile.setEditingCrowdsale(crowdsale);
+            await profile.update();
+            this.props.history.push(`/${profile.getType()}/createInvestment`);
+        }
     }
 
     handleClick = (event, object) => {
-
         let id = object.id;
-        console.log(object);
         let crowdsale = APISingleton.getCrowdsaleByCrowdsaleAddress(object.crowdsale_address);
         this.goToEdit(crowdsale);
         const { selected } = this.state;

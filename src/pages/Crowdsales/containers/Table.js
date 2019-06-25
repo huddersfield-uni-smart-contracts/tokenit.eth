@@ -106,18 +106,21 @@ const rows = [
     {
         id: 'token_price',
         label: '($) Token Price',
-        numeric: true
+        numeric: true,
+        align : 'left'
     },
     {
         id: 'raised_percentage',
         label: '(%) Already Raised',
-        numeric: true
+        numeric: true,
+        align : 'left'
     },
    
     {
         id: 'raised_amount',
         label: '($) Already Raised',
-        numeric: true
+        numeric: true,
+        align : 'left'
     },
     {
         id: 'state',
@@ -146,7 +149,7 @@ class EnhancedTableHead extends React.Component {
                     row => (
                     <TableCell
                         key={row.id}
-                        align={row.numeric ? 'right' : 'left'}
+                        align={!row.align ? row.numeric ? 'right' : 'left' : row.align}
                         padding={row.disablePadding ? 'none' : 'default'}
                         sortDirection={orderBy === row.id ? order : false}
                     >

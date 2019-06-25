@@ -67,7 +67,7 @@ class MainRoute extends React.Component {
                 <Layout />
                 <div className="container__wrap">
                     <Route exact path={'/validator'} component={EntryPage}/>
-                    <Route path={'/validator/crowdsales'} component={Crowdsales}/>	
+                    <Route path={'/validator/allCrowdsales'} component={AllCrowdsales}/>	
                     <Route path={'/validator/editCrowdsale'} component={EditCrowdsale}/>	
                 </div>
             </div>

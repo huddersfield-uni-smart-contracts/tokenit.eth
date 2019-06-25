@@ -69,6 +69,7 @@ function getSorting(order, orderBy) {
 
 const fromDatabasetoTable = (data) => {
 	return data.map( (item, index) => {
+        console.log(item)
         return {
             id :  index,
             name : item.investor.name,
@@ -78,8 +79,8 @@ const fromDatabasetoTable = (data) => {
             investments : item.investments,
             token_price : item.token_price,
             token_amount : item.token_buy_amount,
-            total_cost : item.total_cost,
-            state: item.state || 'none'
+            state: item.state || 'none',
+            total_cost : item.total_cost
 		}
 	})
 }
@@ -98,17 +99,27 @@ const rows = [
     {
         id: 'token_price',
         label: '($) Token Price',
-        numeric: true
+        numeric: true,
+        align : 'left'
+
     },
     {
         id: 'token_amount',
         label: 'Token Amount',
-        numeric: true
+        numeric: true,
+        align : 'left'
     },
     {
         id: 'total_cost',
         label: 'Total Cost',
-        numeric: true
+        numeric: true,
+        align : 'left'
+
+    },
+    {
+        id: 'state',
+        label: 'Status',
+        numeric: false
     },
     {
         id: 'company',
@@ -134,7 +145,7 @@ class EnhancedTableHead extends React.Component {
                     row => (
                     <TableCell
                         key={row.id}
-                        align={row.numeric ? 'right' : 'left'}
+                        align={!row.align ? row.numeric ? 'right' : 'left' : row.align}
                         padding={row.disablePadding ? 'none' : 'default'}
                         sortDirection={orderBy === row.id ? order : false}
                     >
@@ -372,6 +383,7 @@ class CrowdsaleInvestmentsTable extends React.Component {
                                         <TableCell align="left">${n.token_price} </TableCell>
                                         <TableCell align="left">{n.token_amount}</TableCell>
                                         <TableCell align="left">${n.total_cost} </TableCell>
+                                        <TableCell align="left">{n.state} </TableCell>
                                         <TableCell align="left">{n.company}</TableCell>
                                     </TableRow>
                             );

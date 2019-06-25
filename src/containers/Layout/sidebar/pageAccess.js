@@ -12,9 +12,9 @@ const pageAccess = {
         home : true,
         createCrowdsale : false,
         editCrowdsale : false,
-        crowdsales : true,
+        crowdsales : false,
         investments : false,
-        allCrowdsales : false,
+        allCrowdsales : true,
         createInvestment : false
     },
     'investor' : {
